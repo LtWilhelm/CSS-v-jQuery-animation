@@ -1,0 +1,103 @@
+.square {
+  height: 300px;
+  background-color: blue;
+  position: relative;
+}
+
+.slide {
+  background-color: hotpink;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0px;
+  overflow: hidden;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+}
+
+#css-animated>.slide {
+  transition: 3s height;
+}
+
+#css-animated:hover>.slide {
+  height: 300px;
+}
+
+.lap-box {
+  height: 300px;
+  background-color: indigo;
+  position: relative;
+}
+
+.circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: lightcoral;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+
+#css-circle>.circle {
+  animation: moving-circle 4s linear infinite both;
+}
+
+@keyframes moving-circle {
+  0% {
+    top: 5%;
+    left: 5%;
+  }
+  25% {
+    top: calc(95% - 50px);
+    left: 5%;
+  }
+  50% {
+    top: calc(95% - 50px);
+    left: calc(95% - 50px);
+  }
+  75% {
+    top: 5%;
+    left: calc(95% - 50px);
+  }
+  100% {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+.code {
+  background-color: #23282e;
+  border-radius: 10px;
+  border: #e83e8c 1px solid;
+}
+
+.code h3 {
+  width: 100%;
+  position: relative;
+}
+
+.code>h3::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 5px;
+  border-bottom: 1px black solid;
+}
+
+.code code {
+  color: #e83e8c !important;
+}
+
+.code var {
+  color: #385efc !important;
+}

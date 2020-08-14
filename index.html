@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="Description" content="Enter your description here" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>CSS v jQuery</title>
+</head>
+
+<body class="bg-dark text-light">
+  <div class="nav navbar-light bg-light mb-5">
+    <h1 class="navbar-brand ml-5">CSS v jQuery Animations!</h1>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a href="https://github.com/LtWilhelm/CSS-v-jQuery-animation" target="_blank"
+          class="nav-link">Source Code</a></li>
+    </ul>
+  </div>
+
+  <div class="container mb-5">
+    <div class="row">
+      <div class="col-12">
+        <p>
+          This is a practical demonstration of a couple of different use cases for CSS animations/transitions and
+          jQuery. I have included the relevant code inline, however, the source code is linked above, and I would highly
+          recommend opening that and taking a look at the code to help understand what is happening.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <h2>Sliding tiles!</h2>
+      <div class="col-12"></div>
+      <div class="col-3"></div>
+      <div class="col-3">
+        <div class="square" id="js-animated">
+          <h3 class="center">Hover me!</h3>
+          <div class="slide text-dark">
+            <h3>I am animated using jQuery</h3>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit molestias rem accusamus, amet
+              architecto id. Iste recusandae corrupti sunt, unde pariatur praesentium aspernatur ad. Vitae, corrupti
+              laudantium! Dolor, quis nemo?
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="square" id="css-animated">
+          <h3 class="center">Hover me!</h3>
+          <div class="slide text-dark">
+            <h3>I am animated using CSS!</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus repellat, ipsam consequatur velit
+              laboriosam delectus commodi alias fugit, enim perferendis facere ut sed voluptate voluptates ab sit
+              eveniet tenetur molestiae.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-4 code">
+        <h3>JavaScript</h3>
+        <pre><code>
+const $square = $('#js-animated');
+$square.on('mouseenter', function () {
+  let $slide = $(this).find($('.slide'));
+
+  $slide.animate({
+    height: '300px',
+    overflow: 'hidden'
+  }, 3000)
+})
+
+$square.on('mouseleave', function () {
+  let $slide = $(this).find($('.slide'));
+
+  $slide.animate({
+    height: '0',
+    overflow: 'hidden'
+  }, 3000)
+})
+        </code></pre>
+      </div>
+      <div class="col-8 text-light">
+        <p>
+          What are the differences you see when you hover over the two boxes above? What about when you take your mouse
+          off of it before the pink box reaches the top? Look at the code for the JavaScript. Maybe it's a bit
+          confusing and long winded, plus it might not be the desired effect. As you saw above, the one animated using
+          jQuery ran through the entire animation cycle before it would shrink back down. If we wanted to stop this, we
+          would have to write some additional code. Try moving your mouse over it several times and watch what happens.
+          What a nightmare! It won't stop animating, even though your mouse isn't over it anymore. It will go up and
+          down as many times as your mouse passed over it.
+        </p>
+      </div>
+      <div class="col-8 mt-3">
+        <p>
+          Compare that to the CSS. A simple transition
+          and changing the height when the parent element is hovered. Plus, it stops animating and immediately goes back
+          down as soon as your mouse leaves. This also means that it won't just go up and down over and over again,
+          going through its entire animation cycle each time.
+        </p>
+      </div>
+      <div class="col-4 code">
+        <h3>CSS</h3>
+        <pre><code>
+#css-animated>.slide {
+  transition: 3s height;
+}
+
+#css-animated:hover>.slide {
+  height: 300px;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <h2>Now for something completely different!</h2>
+      <div class="col-6">
+        <div class="lap-box" id="js-circle">
+          <h3 class="center text-light">Animated with jQuery</h3>
+          <div class="circle"></div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="lap-box" id="css-circle">
+          <h3 class="center text-light">Animated with CSS</h3>
+          <div class="circle"></div>
+        </div>
+      </div>
+      <div class="col-12 text-light">
+        <p>
+          Above are two animations of a circle moving around in a box. They both have the same linear timing function,
+          they both spend a full second moving along each side, and they both start at exactly the same time.
+        </p>
+        <p>
+          This is a little strange. You can see that both of the animations above look very similar, but there's
+          something off with the timing. If you let the page run for long enough, you'll notice that the two animations
+          won't line up at all. Why is that? It comes down to the performance of the two languages. JavaScript is very
+          powerful in comparison, but CSS is specifically built for one purpose, and it does that purpose
+          very well. Each language comes with some trade-offs.
+        </p>
+        <div class="row">
+          <div class="col-5 code">
+            <h3>CSS</h3>
+            <pre><code>
+#css-circle>.circle {
+  animation: moving-circle 4s linear infinite both;
+}
+
+@keyframes moving-circle {
+  0% {
+    top: 5%;
+    left: 5%;
+  }
+  25% {
+    top: calc(95% - 50px);
+    left: 5%;
+  }
+  50% {
+    top: calc(95% - 50px);
+    left: calc(95% - 50px);
+  }
+  75% {
+    top: 5%;
+    left: calc(95% - 50px);
+  }
+  100% {
+    top: 5%;
+    left: 5%;
+  }
+}
+            </code></pre>
+          </div>
+          <div class="col-7">
+            <p>
+              Let's look at the code. In the CSS, you can see that we have to define our keyframes
+              and then tell the animation a couple things like the name, duration, timing function, and then the key
+              here is
+              that we can see that it says 'infinite.' This is the primary difference between the two different methods
+              of
+              animation. In JavaScript, we specifically try to avoid infinite loops because they can lead to massive
+              performance issues, including crashing the program and generally making users unhappy. But in CSS
+              animations,
+              'infinite' is specifically programmed in to handle looping animations in an efficient and performant
+              manner.
+            </p>
+            <p>
+              So how do we handle this moving circle? First, we have to define the keyframes of the animation. Here, you
+              can see that I named the animation <code>moving-circle</code>. Then, I define the different points where I
+              want the animation to change. These are known as keyframes. There are a couple different ways, like using
+              <code>from</code> and <code>to</code> for simple a to b animations, but since we have 4 sections we want
+              to happen, we'll break it up into percents.
+            </p>
+            <p>
+              At 0%, we tell the animation the starting position. We then divide the rest of the animation into as many
+              parts as we want. Since we have 4 sides to move along, we'll do increments of 25%. Now, due to the way the
+              top property works, I have to do a bit of math to find out where it is supposed to move to at the 25%
+              keyframe.
+              CSS has a handy little <code>calc</code> method to do math with numbers that we don't quite know the
+              absolute value of.
+              For example, I can add 4fr and 3em together, or in this case, subtract 50px from 95% of the parent's
+              height. Neat!
+            </p>
+            <p>
+              So we'll repeat this 4 times, changing the top and left properties as needed to get the desired movement.
+              Then, above we use the shorthand
+              <code>animation</code> property of the <code>.circle</code> element. We'll tell it the name of the
+              animation, the total duration of 4 seconds,
+              the <code>linear</code> timing function, and how many times we want the animation to run. Ignore
+              <code>both</code> as it isn't extremely pertinent
+              to the current topic, but do read about it on your own so you can understand.
+            </p>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <p>
+              By now, you can probably see that the JavaScript animation is starting to lag behind, probably quite
+              significantly. Why is that? If you look at the two independently, they look pretty similar, so how is
+              JavaScript falling so far behind? Let's look at the code. First, we get the relevant elements and store
+              them. Then we have to do something a little silly in order to get the correct positions. In CSS, we were
+              able to use calc to get the correct position by subtracting 50px from 95%, which is a really neat trick.
+              However, in JavaScript, we have to actually do maths (ugh). So first we get the width or height of the
+              container, multiply it by .95 to get 95%, and then subtract 50 from it to get the correct position of the
+              box when it moves to either the bottom or right. Then we call our animateCircle function, which we define
+              below that.
+            </p>
+            <p>
+              This is were the bulk of the performance issues start. Using jQuery's <code>.animate()</code> method, we
+              actually have a lot of flexibility! We can provide whatever CSS properties we want to animate to, provide
+              a length of time, and a timing function as well! But there is a snag. When animating, jQuery has to do a
+              lot of math to determine the difference between the last frame and the current frame. CSS does the same
+              thing, but is much, MUCH faster at it. Then there is one more thing that is missing.
+            </p>
+            <p>
+              How do we make this loop infinitely? Like I mentioned earlier, in JavaScript (and almost every other
+              language), we want to avoid infinite loops, and as such, there is no "infinite" keyword that we can use.
+              So maybe we do a loop of some sort? No, it doesn't quite work. For one, jQuery still waits to finish the
+              current animation before it does the next one, so if we loop, we'll just add way more animation cycles
+              to the queue than jQuery can actually handle. Secondly, we have 4 animations that we want to run, one
+              after another; <var>Down</var>, <var>Right</var>, <var>Up</var>, <var>Left</var>. Since we start with
+              down, we
+              won't need to define the down function, so you can consider <code>animateCircle</code> to be the
+              <var>Down</var>
+              function.
+            </p>
+          </div>
+          <div class="col-6 code">
+            <h3>JavaScript</h3>
+            <pre><code>
+const <var>$circle</var> = $('#js-circle>.circle'); 
+const <var>$circleContainer</var> = $('#js-circle');
+
+const <var>topPosition</var> = (<var>$circleContainer</var>.height() * .95) - 50;
+const <var>leftPosition</var> = (<var>$circleContainer</var>.width() * .95) - 50;
+
+<var>animateCircle</var>()
+
+function <var>animateCircle</var> () {
+  $circle.animate({
+    top: <var>topPosition</var> 
+  }, 1000, 'linear', <var>right</var>)
+}
+
+function <var>right</var> () {
+  $circle.animate({ 
+    left: <var>leftPosition</var> 
+  }, 1000, 'linear', <var>up</var>)
+}
+
+function <var>up</var> () {
+  $circle.animate({ 
+    top: '5%' 
+  }, 1000, 'linear', <var>left</var>)
+}
+
+function <var>left</var> () {
+  $circle.animate({ 
+    left: '5%' 
+  }, 1000, 'linear', <var>animateCircle</var>) 
+}
+              </code></pre>
+          </div>
+          <div class="col-12">
+            <p>
+              So what happens? The jQuery <code>.animate()</code> method takes in our animation parameters, and also a
+              callback
+              function to run once the animation is done. If we pass in the next segment of the animation to run as that
+              callback,
+              we can effectively string as many different animations together as we want, and more importantly, we can
+              pass our first animation in as the callback for the last animation, thus creating our infinitely repeating
+              animation. <code>animateCircle</code> calls <code>right</code> which calls <code>up</code> which calls
+              <var>left</var> which calls <code>animateCircle</code> again. Cool! An infinite loop in JavaScript with no
+              <code>for</code> or <code>while</code> loops. But there's a problem with this idea. Most browsers or
+              libraries can tell when something might create an infinite loop and stop it from running too many times.
+              This method of recursively calling the function over and over again circumvents those checks and will most
+              likely cause your application to crash or run slowly on weaker devices, such as phones and tablets.
+            </p>
+            <p>
+              Why isn't this crashing then? Well, it's really due to the fact that each section of the animation
+              takes a full second to complete. In that time, JavaScript can do a pretty good job of cleaning up after
+              itself to keep it running at an alright speed. But ultimately, as time goes on, more memory will get used
+              up,
+              and the script will run slower and slower until it eventually crashes or gets closed (this specific
+              example will
+              take a really, really long time to crash).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h2>What's the verdict?</h2>
+      <div class="col-12">
+        <p>
+          Is jQuery animation just not worth it? I'm tempted to say yes. It's not performant, there
+          are a lot of interesting little caveats to using it, it has to be programmed logically using an external
+          library, and probably some other downsides that I haven't covered. CSS is just there, in your browser already,
+          it's faster, it's easier (to me at least), and has a lot of really cool features.
+        </p>
+        <p>
+          But jQuery animation has a lot going for it too. For one, some people find CSS animations confusing and
+          frustrating,
+          I used to myself. But one thing that you might have already figured out is that there is a built in way to see
+          if an animation has finished and run some code when it is. This is definitely possible with CSS and vanilla
+          JavaScript, but does take a bit more work to accomplish. There is also a bunch of other advanced options to
+          help make your animations really cool. Also, CSS isn't perfect. You will come across something that you simply
+          cannot animate with CSS, so knowing how to use jQuery animation can help you to solve those issues.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const $square = $('#js-animated');
+
+      $square.on('mouseenter', function () {
+        let $slide = $(this).find($('.slide'));
+
+        $slide.animate({
+          height: '300px',
+          overflow: 'hidden'
+        }, 3000)
+      })
+
+      $square.on('mouseleave', function () {
+        let $slide = $(this).find($('.slide'));
+
+        $slide.animate({
+          height: '0',
+          overflow: 'hidden'
+        }, 3000)
+      })
+
+      const $circle = $('#js-circle>.circle');
+      const $circleContainer = $('#js-circle');
+
+      const topPosition = ($circleContainer.height() * .95) - 50;
+      const leftPosition = ($circleContainer.width() * .95) - 50;
+
+      animateCircle()
+
+      function animateCircle() {
+        $circle.animate({
+          top: topPosition
+        }, 1000, 'linear', function () {
+          $circle.animate({
+            left: leftPosition
+          }, 1000, 'linear', function () {
+            $circle.animate({
+              top: '5%'
+            }, 1000, 'linear', function () {
+              $circle.animate({
+                left: '5%'
+              }, 1000, 'linear', animateCircle)
+            })
+          })
+        })
+      }
+    })
+  </script>
+</body>
+
+</html>
