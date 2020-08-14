@@ -197,12 +197,12 @@ $square.on('mouseleave', function () {
               can see that I named the animation <code>moving-circle</code>. Then, I define the different points where I
               want the animation to change. These are known as keyframes. There are a couple different ways, like using
               <code>from</code> and <code>to</code> for simple a to b animations, but since we have 4 sections we want
-              to happen, we'll break it up into percents.
+              to animate, we'll break it up into percents.
             </p>
             <p>
               At 0%, we tell the animation the starting position. We then divide the rest of the animation into as many
               parts as we want. Since we have 4 sides to move along, we'll do increments of 25%. Now, due to the way the
-              top property works, I have to do a bit of math to find out where it is supposed to move to at the 25%
+              <code>top</code> and <code>left</code> properties work, I have to do a bit of math to find out where it is supposed to move to at the 25%
               keyframe.
               CSS has a handy little <code>calc</code> method to do math with numbers that we don't quite know the
               absolute value of.
@@ -211,7 +211,7 @@ $square.on('mouseleave', function () {
             </p>
             <p>
               So we'll repeat this 4 times, changing the top and left properties as needed to get the desired movement.
-              Then, above we use the shorthand
+              Then, above that, we use the shorthand
               <code>animation</code> property of the <code>.circle</code> element. We'll tell it the name of the
               animation, the total duration of 4 seconds,
               the <code>linear</code> timing function, and how many times we want the animation to run. Ignore
@@ -291,14 +291,14 @@ function <var>left</var> () {
           </div>
           <div class="col-12">
             <p>
-              So what happens? The jQuery <code>.animate()</code> method takes in our animation parameters, and also a
+              So how do we actually get the loop? The jQuery <code>.animate()</code> method takes in our animation parameters, and also a
               callback
               function to run once the animation is done. If we pass in the next segment of the animation to run as that
               callback,
               we can effectively string as many different animations together as we want, and more importantly, we can
               pass our first animation in as the callback for the last animation, thus creating our infinitely repeating
               animation. <code>animateCircle</code> calls <code>right</code> which calls <code>up</code> which calls
-              <var>left</var> which calls <code>animateCircle</code> again. Cool! An infinite loop in JavaScript with no
+              <code>left</code> which calls <code>animateCircle</code> again. Cool! An infinite loop in JavaScript with no
               <code>for</code> or <code>while</code> loops. But there's a problem with this idea. Most browsers or
               libraries can tell when something might create an infinite loop and stop it from running too many times.
               This method of recursively calling the function over and over again circumvents those checks and will most
