@@ -202,7 +202,8 @@ $square.on('mouseleave', function () {
             <p>
               At 0%, we tell the animation the starting position. We then divide the rest of the animation into as many
               parts as we want. Since we have 4 sides to move along, we'll do increments of 25%. Now, due to the way the
-              <code>top</code> and <code>left</code> properties work, I have to do a bit of math to find out where it is supposed to move to at the 25%
+              <code>top</code> and <code>left</code> properties work, I have to do a bit of math to find out where it is
+              supposed to move to at the 25%
               keyframe.
               CSS has a handy little <code>calc</code> method to do math with numbers that we don't quite know the
               absolute value of.
@@ -291,14 +292,16 @@ function <var>left</var> () {
           </div>
           <div class="col-12">
             <p>
-              So how do we actually get the loop? The jQuery <code>.animate()</code> method takes in our animation parameters, and also a
+              So how do we actually get the loop? The jQuery <code>.animate()</code> method takes in our animation
+              parameters, and also a
               callback
               function to run once the animation is done. If we pass in the next segment of the animation to run as that
               callback,
               we can effectively string as many different animations together as we want, and more importantly, we can
               pass our first animation in as the callback for the last animation, thus creating our infinitely repeating
               animation. <code>animateCircle</code> calls <code>right</code> which calls <code>up</code> which calls
-              <code>left</code> which calls <code>animateCircle</code> again. Cool! An infinite loop in JavaScript with no
+              <code>left</code> which calls <code>animateCircle</code> again. Cool! An infinite loop in JavaScript with
+              no
               <code>for</code> or <code>while</code> loops. But there's a problem with this idea. Most browsers or
               libraries can tell when something might create an infinite loop and stop it from running too many times.
               This method of recursively calling the function over and over again circumvents those checks and will most
@@ -308,10 +311,9 @@ function <var>left</var> () {
               Why isn't this crashing then? Well, it's really due to the fact that each section of the animation
               takes a full second to complete. In that time, JavaScript can do a pretty good job of cleaning up after
               itself to keep it running at an alright speed. But ultimately, as time goes on, more memory will get used
-              up,
-              and the script will run slower and slower until it eventually crashes or gets closed (this specific
-              example will
-              take a really, really long time to crash).
+              up, and the script will run slower and slower until it eventually crashes or gets closed. This specific
+              example will take a really, really long time to crash, but you can see occasional little hiccups leading
+              to it falling behind the CSS animation.
             </p>
           </div>
         </div>
